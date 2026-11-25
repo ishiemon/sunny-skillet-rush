@@ -84,8 +84,8 @@ export function drawFood(ctx, id, x, y, size) {
 
 function drawKitchenBackdrop(ctx, game) {
   // Warm tiled wall, a window, a shelf of jars and hanging pans.
-  ctx.fillStyle = '#f7e3c3'; ctx.fillRect(0, 0, WIDTH, HEIGHT);
-  ctx.fillStyle = '#f1d5a8';
+  ctx.fillStyle = '#f6d9a8'; ctx.fillRect(0, 0, WIDTH, HEIGHT);
+  ctx.fillStyle = '#eec088';
   for (let x = 0; x < WIDTH; x += 64) for (let y = 200; y < 478; y += 46) ctx.fillRect(x + 2, y + 2, 60, 42);
   ctx.fillStyle = '#a8d4e6'; roundRect(ctx, 56, 222, 150, 118, 10); ctx.fill();
   ctx.strokeStyle = '#8a5a33'; ctx.lineWidth = 6; ctx.stroke();
@@ -134,6 +134,7 @@ function drawOrderBoard(ctx, game) {
   game.orders.forEach((order, i) => {
     const x = 36 + i * 410, y = 96, w = 392, h = 96;
     ctx.fillStyle = '#fffaf0'; roundRect(ctx, x, y, w, h, 8); ctx.fill();
+    ctx.strokeStyle = '#d9c9a8'; ctx.lineWidth = 2; ctx.stroke();
     ctx.fillStyle = '#e2483d'; ctx.beginPath(); ctx.arc(x + 20, y + 14, 7, 0, 7); ctx.fill();
     text(ctx, `Table ${order.table}`, x + 36, y + 15, 15, '#8a5a33', 'left');
     text(ctx, order.recipe.name, x + w - 10, y + 15, 16, '#5b3421', 'right');
@@ -157,9 +158,10 @@ function drawPlateArea(ctx, game) {
   ctx.fillStyle = '#b07a45'; ctx.fillRect(0, 478, WIDTH, 34);
   ctx.fillStyle = '#96622f'; ctx.fillRect(0, 506, WIDTH, 6);
   // The plate being assembled.
-  ctx.fillStyle = 'rgba(0,0,0,0.14)'; ctx.beginPath(); ctx.ellipse(x + shakeX, y + 10, r + 12, r * 0.92, 0, 0, 7); ctx.fill();
+  ctx.fillStyle = 'rgba(0,0,0,0.24)'; ctx.beginPath(); ctx.ellipse(x + shakeX, y + 12, r + 14, r * 0.94, 0, 0, 7); ctx.fill();
   ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(x + shakeX, y, r, 0, 7); ctx.fill();
-  ctx.fillStyle = '#f3ead8'; ctx.beginPath(); ctx.arc(x + shakeX, y, r * 0.78, 0, 7); ctx.fill();
+  ctx.strokeStyle = '#c9b184'; ctx.lineWidth = 4; ctx.stroke();
+  ctx.fillStyle = '#efe3cb'; ctx.beginPath(); ctx.arc(x + shakeX, y, r * 0.78, 0, 7); ctx.fill();
   const spots = [[-38, -22], [36, -26], [0, 30]];
   game.plate.forEach((id, i) => drawFood(ctx, id, x + shakeX + spots[i][0], y + spots[i][1], 62));
   if (game.plate.length === 0) text(ctx, 'empty plate', x, y, 20, '#b8a888');
@@ -185,7 +187,7 @@ function drawPlateArea(ctx, game) {
     text(ctx, `✓ Last served: ${game.lastServed.name}  +$${game.lastServed.earned}`, 640, 496, 16, '#ffffff');
   }
   if (game.messageTime > 0 && game.message) {
-    text(ctx, game.message, 640, 224, 19, '#b02a22');
+    text(ctx, game.message, 640, 224, 21, '#b02a22');
   }
 }
 
